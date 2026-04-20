@@ -1,0 +1,32 @@
+def get_specialist(disease: str) -> str:
+    specialist_map = {
+        "Heart attack": "Cardiologist",
+        "Hypertension": "Cardiologist",
+        "Bronchial Asthma": "Pulmonologist",
+        "Pneumonia": "Pulmonologist",
+        "Tuberculosis": "Pulmonologist",
+        "Osteoarthritis": "Rheumatologist",
+        "Arthritis": "Rheumatologist",
+        "Cervical spondylosis": "Orthopedist",
+        "Acne": "Dermatologist",
+        "Psoriasis": "Dermatologist",
+        "Impetigo": "Dermatologist",
+        "Fungal infection": "Dermatologist",
+        "Chicken pox": "Dermatologist",
+        "Drug Reaction": "Dermatologist",
+        "Migraine": "Neurologist",
+        "Paralysis (brain hemorrhage)": "Neurologist",
+        "(Vertigo) Paroxysmal Positional Vertigo": "Neurologist",
+        "Jaundice": "Gastroenterologist",
+        "GERD": "Gastroenterologist",
+        "Peptic ulcer disease": "Gastroenterologist",
+        "Gastroenteritis": "Gastroenterologist",
+        "Alcoholic hepatitis": "Gastroenterologist",
+        "Diabetes": "Endocrinologist",
+        "Hypoglycemia": "Endocrinologist",
+        "Hyperthyroidism": "Endocrinologist",
+        "Hypothyroidism": "Endocrinologist",
+        "Urinary tract infection": "Urologist",
+    }
+
+    return specialist_map.get(disease, "General Practitioner")

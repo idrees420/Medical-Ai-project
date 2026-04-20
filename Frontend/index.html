@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AI Healthcare Assistant for disease diagnosis and appointment booking">
+    <title>AI Healthcare Assistant</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="background-globes">
+        <div class="globe globe-1"></div>
+        <div class="globe globe-2"></div>
+        <div class="globe globe-3"></div>
+    </div>
+
+    <nav class="app-nav">
+        <button id="nav-diagnosis" class="nav-btn active">Diagnosis</button>
+        <button id="nav-appointments" class="nav-btn">My Appointments</button>
+    </nav>
+
+    <main class="app-container">
+        <header class="app-header">
+            <h1>AI Diagnostics & Care</h1>
+            <p id="header-subtitle">Describe your symptoms to receive an AI-powered diagnosis and connect with specialized healthcare professionals.</p>
+        </header>
+
+        <section id="appointments-section" class="card hidden fade-in">
+            <div class="dashboard-header">
+                <h2>Your Upcoming Appointments</h2>
+                <button id="refresh-appointments" class="icon-btn-small">↻</button>
+            </div>
+            <div id="appointments-list" class="appointments-list">
+                <p class="empty-msg">No appointments booked yet.</p>
+            </div>
+        </section>
+
+        <section id="diagnosis-section" class="card fade-in">
+            <div class="input-group">
+                <label for="symptoms-input">How are you feeling today?</label>
+                <textarea id="symptoms-input" placeholder="E.g., I have been having a severe headache, slight fever, and nausea since yesterday morning..."></textarea>
+            </div>
+            
+            <button id="predict-btn" class="primary-btn glow-effect">
+                <span class="btn-text">Diagnose Your Disease</span>
+                <div class="loader hidden"></div>
+            </button>
+
+            <div id="prediction-result" class="result-box hidden">
+                <h3>Diagnosis Result</h3>
+                <p id="disease-text"></p>
+                
+                <div class="action-wrapper hidden" id="appointment-wrapper">
+                    <button id="book-appointment-btn" class="secondary-btn">
+                        Book an Appointment
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section id="chat-section" class="card hidden slide-up">
+            <div class="chat-header">
+                <h2>Appointment Booking</h2>
+                <button id="close-chat" class="icon-btn" aria-label="Close chat">×</button>
+            </div>
+            
+            <div class="chat-window" id="chat-window">
+                <div class="message ai-message">
+                    <div class="avatar">AI</div>
+                    <div class="bubble">Hello! I see you need an appointment based on your recent diagnosis. How can I help you schedule that today?</div>
+                </div>
+            </div>
+
+            <div class="chat-input-area">
+                <input type="text" id="chat-input" placeholder="Type a message..." autocomplete="off">
+                <button id="send-btn" class="send-btn">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M22 2L11 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M22 2L15 22L11 13L2 9L22 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Portal | Medical AI</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body { font-family: 'Outfit', sans-serif; background: #0f172a; color: white; margin: 0; }
+    </style>
+</head>
+<body>
+
+    <!-- Doctor Login Section -->
+    <section id="doctor-login-section">
+        <div id="login-container" class="login-card">
+            <div class="login-header">
+                <div class="logo-icon"><i class="fas fa-user-md fa-3x" style="color: #60a5fa; margin-bottom: 1rem;"></i></div>
+                <h2>Doctor Portal</h2>
+                <p id="login-subtitle">Secure Access Dashboard</p>
+            </div>
+
+            <!-- Login Form -->
+            <form id="doctor-login-form">
+                <div class="form-group">
+                    <label style="display: block; margin-bottom: 0.5rem; color: #94a3b8; font-size: 0.9rem;">Email Address</label>
+                    <input type="email" id="login-email" placeholder="doctor@hospital.com" required>
+                </div>
+                <div class="form-group">
+                    <label style="display: block; margin-bottom: 0.5rem; color: #94a3b8; font-size: 0.9rem;">Password</label>
+                    <input type="password" id="login-password" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="btn-primary">Sign In to Dashboard</button>
+                <p class="toggle-text">New to the portal? <a href="#" id="show-signup">Request Access</a></p>
+            </form>
+
+            <!-- Signup Form -->
+            <form id="doctor-signup-form" style="display: none;">
+                <div class="form-group">
+                    <input type="text" id="signup-name" placeholder="Full Name" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" id="signup-email" placeholder="Email Address" required>
+                </div>
+                <div class="form-group">
+                    <input type="tel" id="signup-phone" placeholder="Phone Number" required>
+                </div>
+                <div class="form-group">
+                    <select id="signup-spec" required>
+                        <option value="" disabled selected>Select Your Specialization</option>
+                        <option value="General Physician">General Physician</option>
+                        <option value="Cardiologist">Cardiologist</option>
+                        <option value="Dermatologist">Dermatologist</option>
+                        <option value="Neurologist">Neurologist</option>
+                        <option value="Pediatrician">Pediatrician</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="signup-password" placeholder="Choose a Strong Password" required>
+                </div>
+                <button type="submit" class="btn-primary">Complete Registration</button>
+                <p class="toggle-text">Already registered? <a href="#" id="show-login">Sign In Here</a></p>
+            </form>
+        </div>
+    </section>
+
+    <!-- Doctor Dashboard Section -->
+    <section id="doctor-dashboard" class="hidden">
+        <header class="dash-header">
+            <div>
+                <h2 id="doctor-welcome">Welcome back, Doctor</h2>
+                <p style="color: #94a3b8;">You have new appointment requests today.</p>
+            </div>
+            <button id="doctor-logout" class="btn-primary" style="width: auto; padding: 0.75rem 1.5rem; background: rgba(239, 68, 68, 0.1); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.2);">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </header>
+
+        <div class="dashboard-stats" style="display: flex; gap: 1.5rem; margin-bottom: 2.5rem;">
+            <div class="stat-card" style="flex: 1; background: rgba(59, 130, 246, 0.1); padding: 1.5rem; border-radius: 16px; border: 1px solid rgba(59, 130, 246, 0.2);">
+                <div style="color: #60a5fa; font-weight: 700; margin-bottom: 0.5rem;">APPOINTMENTS</div>
+                <div style="font-size: 2rem; font-weight: 800;" id="total-count">0</div>
+            </div>
+            <div class="stat-card" style="flex: 2; background: rgba(139, 92, 246, 0.1); padding: 1.5rem; border-radius: 16px; border: 1px solid rgba(139, 92, 246, 0.2); position: relative;">
+                <div style="color: #a78bfa; font-weight: 700; margin-bottom: 0.5rem;">YOUR SCHEDULE</div>
+                <div id="schedule-display" style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <span id="display-availability" style="font-weight: 700;">Mon-Fri</span> | 
+                        <span id="display-hours" style="color: #94a3b8;">09:00 - 17:00</span>
+                    </div>
+                    <button id="edit-schedule-btn" style="background: none; border: 1px solid rgba(167, 139, 250, 0.4); color: #a78bfa; padding: 4px 12px; border-radius: 8px; cursor: pointer; font-size: 0.8rem;">Edit</button>
+                </div>
+                
+                <!-- Hidden Edit Form -->
+                <div id="schedule-edit-form" style="display: none; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: #1e293b; padding: 1.5rem; border-radius: 16px; z-index: 10;">
+                    <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
+                        <input type="text" id="edit-availability" placeholder="Days (e.g. Mon-Sat)" style="flex: 1; background: #0f172a; border: 1px solid #334155; color: white; padding: 8px; border-radius: 6px;">
+                        <input type="text" id="edit-hours" placeholder="Hours (e.g. 10:00-18:00)" style="flex: 1; background: #0f172a; border: 1px solid #334155; color: white; padding: 8px; border-radius: 6px;">
+                    </div>
+                    <div style="display: flex; gap: 1rem;">
+                        <button id="save-schedule-btn" class="btn-primary" style="margin:0; padding: 8px; font-size: 0.8rem; background: #8b5cf6;">Save</button>
+                        <button id="cancel-schedule-btn" style="background: none; color: #94a3b8; border: none; cursor: pointer; font-size: 0.8rem;">Cancel</button>
+                    </div>
+                </div>
+            </div>
+            <div class="stat-card" style="flex: 1; background: rgba(16, 185, 129, 0.1); padding: 1.5rem; border-radius: 16px; border: 1px solid rgba(16, 185, 129, 0.2);">
+                <div style="color: #34d399; font-weight: 700; margin-bottom: 0.5rem;">CONFIRMED</div>
+                <div style="font-size: 2rem; font-weight: 800;" id="confirmed-count">0</div>
+            </div>
+        </div>
+
+        <h3 style="margin-bottom: 1.5rem; color: #f8fafc; display: flex; align-items: center; gap: 0.5rem;">
+            <i class="fas fa-calendar-check" style="color: #60a5fa;"></i> Recent Schedule
+        </h3>
+        
+        <div id="doctor-appointments-list" class="appointment-grid">
+            <!-- Appointments will be rendered here as Cards -->
+            <p class="empty-msg">Fetching your schedule...</p>
+        </div>
+    </section>
+
+    <script src="doctor.js"></script>
+</body>
+</html>

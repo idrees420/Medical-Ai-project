@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authentication - AI Healthcare</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="background-globes">
+        <div class="globe globe-1"></div>
+        <div class="globe globe-2"></div>
+        <div class="globe globe-3"></div>
+    </div>
+
+    <main class="app-container auth-container">
+        <div class="app-header">
+            <h1>AI Diagnostics & Care</h1>
+        </div>
+        <div class="auth-card-wrap">
+            <!-- Login -->
+            <div class="card auth-card fade-in" id="login-card">
+                <div class="auth-header">
+                    <h2>Welcome Back</h2>
+                    <p>Log in to access your healthcare dashboard</p>
+                </div>
+                <form id="login-form">
+                    <div id="login-error" class="error-text hidden"></div>
+                    <div class="input-group">
+                        <label for="login-email">Email Address</label>
+                        <input type="email" id="login-email" class="auth-input" placeholder="Enter your email"
+                            required autocomplete="off">
+                    </div>
+                    <div class="input-group">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" class="auth-input" placeholder="Enter your password"
+                            required>
+                    </div>
+                    <button type="submit" class="primary-btn glow-effect mt-2" id="login-btn">
+                        <span class="btn-text">Log In</span>
+                        <div class="loader hidden" id="login-loader"></div>
+                    </button>
+                    <p class="auth-switch">Don't have an account? <span class="link-text" id="show-signup">Sign up
+                            now</span></p>
+                </form>
+            </div>
+
+            <!-- Sign Up -->
+            <div class="card auth-card hidden slide-up" id="signup-card">
+                <div class="auth-header">
+                    <h2>Create Account</h2>
+                    <p>Join us for AI-powered diagnostics</p>
+                </div>
+                <form id="signup-form">
+                    <div id="signup-error" class="error-text hidden"></div>
+                    <div class="input-group">
+                        <label for="signup-full-name">Full Name</label>
+                        <input type="text" id="signup-full-name" class="auth-input" placeholder="Enter your full name"
+                            required autocomplete="off">
+                    </div>
+                    <div class="input-group">
+                        <label for="signup-email">Email Address</label>
+                        <input type="email" id="signup-email" class="auth-input" placeholder="Enter your email"
+                            required autocomplete="off">
+                    </div>
+                    <div class="input-group">
+                        <label for="signup-phone">Phone Number (Optional)</label>
+                        <input type="tel" id="signup-phone" class="auth-input" placeholder="e.g. +1 234 567 890">
+                    </div>
+                    <div class="input-group">
+                        <label for="signup-password">Password</label>
+                        <input type="password" id="signup-password" class="auth-input" placeholder="Create a password"
+                            required>
+                    </div>
+                    <button type="submit" class="primary-btn glow-effect mt-2" id="signup-btn">
+                        <span class="btn-text">Sign Up</span>
+                        <div class="loader hidden" id="signup-loader"></div>
+                    </button>
+                    <p class="auth-switch">Already have an account? <span class="link-text" id="show-login">Log
+                            in</span></p>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <script src="auth.js"></script>
+</body>
+
+</html>
