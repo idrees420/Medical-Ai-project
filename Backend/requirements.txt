@@ -1,0 +1,13 @@
+fastapi
+uvicorn
+sqlalchemy
+python-dotenv
+langchain
+langchain-core
+langgraph
+langchain-mistralai
+mistralai==1.2.0
+passlib
+bcrypt==3.2.2
+email-validator
+psycopg2-binary
