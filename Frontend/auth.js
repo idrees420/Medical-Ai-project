@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://127.0.0.1:8001';
+const API_BASE_URL = 'https://fyp-backend-xvuk.onrender.com';
 
 // DOM Elements
 const loginCard = document.getElementById('login-card');
@@ -62,10 +62,10 @@ async function handleAuth(url, credentials, formType) {
         // Save full name or user ID locally
         localStorage.setItem('userFullName', data.full_name);
         localStorage.setItem('userEmail', data.email);
-        
+
         // Redirect to main app
         window.location.href = 'index.html';
-        
+
     } catch (error) {
         errorEl.textContent = error.message;
         errorEl.classList.remove('hidden');
@@ -81,9 +81,9 @@ loginForm.addEventListener('submit', (e) => {
     e.preventDefault();
     const email = document.getElementById('login-email').value.trim();
     const password = document.getElementById('login-password').value.trim();
-    
-    if(!email || !password) return;
-    
+
+    if (!email || !password) return;
+
     handleAuth(`${API_BASE_URL}/login`, { email, password }, 'login');
 });
 
@@ -93,8 +93,8 @@ signupForm.addEventListener('submit', (e) => {
     const email = document.getElementById('signup-email').value.trim();
     const phone = document.getElementById('signup-phone').value.trim();
     const password = document.getElementById('signup-password').value.trim();
-    
-    if(!full_name || !email || !password) return;
-    
+
+    if (!full_name || !email || !password) return;
+
     handleAuth(`${API_BASE_URL}/signup`, { full_name, email, phone, password }, 'signup');
 });

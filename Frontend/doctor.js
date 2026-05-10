@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://127.0.0.1:8001';
+const API_BASE_URL = 'https://fyp-backend-xvuk.onrender.com';
 
 // DOM Elements
 const loginSection = document.getElementById('doctor-login-section');
@@ -168,11 +168,11 @@ function showDashboard() {
     loginSection.style.display = 'none';
     dashboardSection.classList.remove('hidden');
     doctorWelcome.textContent = `Welcome back, Dr. ${localStorage.getItem('doctorName')}`;
-    
+
     // Update schedule display
     displayAvailability.innerText = localStorage.getItem('availability') || "Mon-Fri";
     displayHours.innerText = localStorage.getItem('workingHours') || "09:00 - 17:00";
-    
+
     fetchDoctorAppointments();
 }
 
@@ -180,7 +180,7 @@ async function fetchDoctorAppointments() {
     try {
         const response = await fetch(`${API_BASE_URL}/doctor/appointments/${currentDoctorId}`);
         if (!response.ok) throw new Error('Failed to fetch appointments');
-        
+
         const appointments = await response.json();
         renderDoctorAppointments(appointments);
         updateStats(appointments);
@@ -204,9 +204,9 @@ function renderDoctorAppointments(appointments) {
     appointments.forEach(app => {
         const item = document.createElement('div');
         item.className = 'appointment-card';
-        
+
         const statusClass = app.status === 'pending' ? 'badge-pending' : 'badge-confirmed';
-        
+
         item.innerHTML = `
             <span class="status-badge ${statusClass}">${app.status}</span>
             <div class="patient-info">
@@ -246,7 +246,7 @@ async function updateStatus(appointmentId, status) {
         });
 
         if (!response.ok) throw new Error('Update failed');
-        
+
         fetchDoctorAppointments();
     } catch (error) {
         alert("Ops! Failed to update: " + error.message);

@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://127.0.0.1:8001';
+const API_BASE_URL = 'https://fyp-backend-xvuk.onrender.com';
 
 // DOM Elements
 const symptomsInput = document.getElementById('symptoms-input');
@@ -61,7 +61,7 @@ async function fetchAppointments() {
     try {
         const response = await fetch(`${API_BASE_URL}/my-appointments?email=${email}`);
         if (!response.ok) throw new Error('Failed to fetch appointments');
-        
+
         const appointments = await response.json();
         renderAppointments(appointments);
     } catch (error) {
@@ -80,7 +80,7 @@ function renderAppointments(appointments) {
     appointments.forEach(app => {
         const item = document.createElement('div');
         item.className = 'appointment-item fade-in';
-        
+
         item.innerHTML = `
             <div class="apt-main-info">
                 <h4>Dr. ${app.doctor_name}</h4>
@@ -102,7 +102,7 @@ refreshBtn.addEventListener('click', fetchAppointments);
 // --- Prediction Logic ---
 predictBtn.addEventListener('click', async () => {
     const symptoms = symptomsInput.value.trim();
-    
+
     if (!symptoms) {
         alert("Please describe your symptoms first.");
         return;
@@ -124,10 +124,10 @@ predictBtn.addEventListener('click', async () => {
         const data = await response.json();
         currentDiagnosis = data.result || "Unknown condition";
         diseaseText.textContent = currentDiagnosis;
-        
+
         resultBox.classList.remove('hidden');
         appointmentWrapper.classList.remove('hidden');
-        
+
     } catch (error) {
         console.error("Error:", error);
         alert("Failed to connect to the diagnosis service.");
@@ -142,7 +142,7 @@ predictBtn.addEventListener('click', async () => {
 bookAppointmentBtn.addEventListener('click', () => {
     diagnosisSection.classList.add('hidden');
     chatSection.classList.remove('hidden');
-    
+
     // Add context to chat if diagnosis exists
     if (currentDiagnosis && chatHistory.length === 0) {
         const introMsg = `I was just diagnosed with ${currentDiagnosis}. I'd like to book an appointment with a specialist.`;
@@ -150,7 +150,7 @@ bookAppointmentBtn.addEventListener('click', () => {
         chatHistory.push(`User: ${introMsg}`);
         sendMessage(introMsg);
     }
-    
+
     chatInput.focus();
 });
 
@@ -163,7 +163,7 @@ closeChatBtn.addEventListener('click', () => {
 function createMessageElement(content, isUser = false) {
     const wrapper = document.createElement('div');
     wrapper.className = `message ${isUser ? 'user-message' : 'ai-message'} fade-in`;
-    
+
     wrapper.innerHTML = `
         <div class="avatar">${isUser ? 'U' : 'AI'}</div>
         <div class="bubble">${content}</div>
@@ -214,10 +214,10 @@ async function sendMessage(overrideMessage = null) {
     try {
         // 3. Call Chat API
         const userEmail = localStorage.getItem('userEmail');
-        
+
         // Include predicted disease in the request so agent can use it
-        const payload = { 
-            message, 
+        const payload = {
+            message,
             history: chatHistory,
             email: userEmail
         };
@@ -231,11 +231,11 @@ async function sendMessage(overrideMessage = null) {
         if (!response.ok) throw new Error('Chat API failed');
 
         const data = await response.json();
-        
+
         // 4. Update state and UI
         chatHistory = data.history;
         hideTypingIndicator();
-        
+
         // Render AI response
         chatWindow.appendChild(createMessageElement(data.response, false));
         chatWindow.scrollTop = chatWindow.scrollHeight;
