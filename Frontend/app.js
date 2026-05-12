@@ -1,5 +1,10 @@
 const API_BASE_URL = 'https://fyp-backend-xvuk.onrender.com';
 
+// --- Authentication Check ---
+if (!localStorage.getItem('userEmail')) {
+    window.location.href = 'auth.html';
+}
+
 // DOM Elements
 const symptomsInput = document.getElementById('symptoms-input');
 const predictBtn = document.getElementById('predict-btn');
@@ -26,8 +31,17 @@ let currentDiagnosis = "";
 // --- Navigation Logic ---
 const navDiagnosis = document.getElementById('nav-diagnosis');
 const navAppointments = document.getElementById('nav-appointments');
+const navLogout = document.getElementById('nav-logout');
 const appointmentsSection = document.getElementById('appointments-section');
 const headerSubtitle = document.getElementById('header-subtitle');
+
+if (navLogout) {
+    navLogout.addEventListener('click', () => {
+        localStorage.removeItem('userEmail');
+        localStorage.removeItem('userFullName');
+        window.location.href = 'auth.html';
+    });
+}
 
 navDiagnosis.addEventListener('click', () => {
     navDiagnosis.classList.add('active');
