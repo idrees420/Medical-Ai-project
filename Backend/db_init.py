@@ -42,6 +42,12 @@ def seed_doctors():
             email="robert.wilson@hospital.com",
             phone="123-456-7894",
             specialization="Pediatrics"
+        ),
+        Doctor(
+            full_name="Dr. Alan Parker",
+            email="alan.parker@hospital.com",
+            phone="123-456-7895",
+            specialization="Gastroenterologist"
         )
     ]
 

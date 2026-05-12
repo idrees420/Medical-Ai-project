@@ -26,22 +26,26 @@ llm = ChatMistralAI(model="mistral-small-latest", temperature=0)
 
 # --- Tools ---
 
+import time
+
 @tool
 def find_doctor(specialty: str):
     """Search for a doctor by specialty."""
+    time.sleep(1.5) # Fix for Mistral Free Tier rate limit
     return search_doctors(specialty)
 
 @tool
-def book_appointment(doctor_id: int, date: str, time: str, user_email: str, predicted_disease: str = None):
+def book_appointment(doctor_id: int, date: str, time_str: str, user_email: str, predicted_disease: str = None):
     """
     Book an appointment with a doctor.
     Args:
         doctor_id: The ID of the doctor (e.g., 1).
         date: Date in YYYY-MM-DD format (e.g., '2026-04-20').
-        time: Time in HH:MM format (e.g., '11:00').
+        time_str: Time in HH:MM format (e.g., '11:00').
         user_email: The email of the patient booking the appointment.
         predicted_disease: Optional. The disease diagnosed by the AI earlier.
     """
+    time.sleep(1.5) # Fix for Mistral Free Tier rate limit
     db = SessionLocal()
     try:
         # 1. Find the patient
@@ -57,7 +61,7 @@ def book_appointment(doctor_id: int, date: str, time: str, user_email: str, pred
         # 3. Format date and time
         try:
             apt_date = datetime.strptime(date, "%Y-%m-%d").date()
-            apt_time = datetime.strptime(time, "%H:%M").time()
+            apt_time = datetime.strptime(time_str, "%H:%M").time()
         except Exception:
             return "Error: Invalid date or time format. Please use YYYY-MM-DD and HH:MM."
 
@@ -69,7 +73,7 @@ def book_appointment(doctor_id: int, date: str, time: str, user_email: str, pred
         ).first()
 
         if conflict:
-            return f"Error: Dr. {doctor.full_name} is already booked for {date} at {time}. Please choose another time or doctor."
+            return f"Error: Dr. {doctor.full_name} is already booked for {date} at {time_str}. Please choose another time or doctor."
 
         # 5. Create appointment
         new_app = models.Appointment(
