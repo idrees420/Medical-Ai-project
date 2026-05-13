@@ -117,10 +117,9 @@ Available agents
 - USER
 
 Rules:
-
-1. If user asks for doctor → InfoAgent
-2. If doctor already shown AND user says "yes", "ok", "book", → BookingAgent
-3. If booking done → EndAgent
+1. If the user is asking to find a doctor, agreeing to search for a specialist, or saying "yes" to finding a doctor → InfoAgent
+2. ONLY IF the AI has already listed specific doctors AND the user is selecting one or providing a date/time → BookingAgent
+3. If the booking was just successfully completed by the BookingAgent → EndAgent
 4. If unclear → USER
 
 IMPORTANT:
@@ -144,8 +143,12 @@ supervisor_chain = supervisor_prompt | llm
 info_agent = create_react_agent(
     llm, 
     tools=[find_doctor], 
-    # RENAME 'state_modifier' to 'system_message'
-    prompt="You are an Info Agent. Your job is to find doctors based on the user's request. Use the 'find_doctor' tool. When you find doctors, ALWAYS include their ID in your response to the user so they can be booked."
+    prompt="""You are an Info Agent. Your job is to guide the patient to the right doctor.
+Flow:
+1. If the user mentions a disease but hasn't explicitly agreed to see a specific specialist, figure out the required specialty and ASK the user: "Do you want to book an appointment with a [Specialty] doctor?" Do NOT use the find_doctor tool yet.
+2. If the user explicitly asks to see doctors of a specific specialty, or says "yes" after you suggest a specialty, use the 'find_doctor' tool to search for doctors.
+3. When you find doctors, list their names, IDs, and their availability (days and hours). Then ask: "Would you like to book an appointment with any of these doctors? Let me know which one and your preferred date and time."
+"""
 )
 # 3. Booking Agent
 # agents.py (Line AFTER fix)
