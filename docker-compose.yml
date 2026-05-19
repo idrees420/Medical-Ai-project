@@ -26,7 +26,7 @@ services:
       - "8001:8001"
     environment:
       - DATABASE_URL=postgresql://postgres:IDpl34$$@db:5432/fyp_db
-      - MISTRAL_API_KEY=X82QzcHRNCvHTP4rV2HXQ0IwF1xZvwsF
+      - MISTRAL_API_KEY=${MISTRAL_API_KEY}
     depends_on:
       - db # Only start backend after db is ready
 
