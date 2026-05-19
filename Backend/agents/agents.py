@@ -62,6 +62,8 @@ def book_appointment(doctor_id: int, date: str, time_str: str, user_email: str, 
         try:
             apt_date = datetime.strptime(date, "%Y-%m-%d").date()
             apt_time = datetime.strptime(time_str, "%H:%M").time()
+            if apt_date < datetime.today().date():
+                return f"Error: You cannot book an appointment in the past ({date}). Please choose a valid future date."
         except Exception:
             return "Error: Invalid date or time format. Please use YYYY-MM-DD and HH:MM."
 
