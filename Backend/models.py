@@ -33,6 +33,7 @@ class Doctor(Base):
     specialization = Column(String, nullable=False)
     availability = Column(String, default="Mon-Fri")
     working_hours = Column(String, default="09:00 - 17:00")
+    fee = Column(String, default="1000")
     created_at = Column(DateTime(timezone=True), server_default=func.now())
 
     # Relationships
