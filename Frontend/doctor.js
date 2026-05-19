@@ -18,6 +18,8 @@ const saveScheduleBtn = document.getElementById('save-schedule-btn');
 const cancelScheduleBtn = document.getElementById('cancel-schedule-btn');
 const editAvailabilityInput = document.getElementById('edit-availability');
 const editHoursInput = document.getElementById('edit-hours');
+const displayFee = document.getElementById('display-fee');
+const editFeeInput = document.getElementById('edit-fee');
 
 // Auth UI Toggles
 const showLoginBtn = document.getElementById('show-login');
@@ -105,6 +107,7 @@ if (loginForm) {
                 localStorage.setItem('doctorName', data.full_name);
                 localStorage.setItem('availability', data.availability);
                 localStorage.setItem('workingHours', data.working_hours);
+                localStorage.setItem('fee', data.fee || '1000');
                 currentDoctorId = data.id;
                 showDashboard();
             } else {
@@ -122,6 +125,7 @@ if (editScheduleBtn) {
     editScheduleBtn.addEventListener('click', () => {
         editAvailabilityInput.value = localStorage.getItem('availability') || "Mon-Fri";
         editHoursInput.value = localStorage.getItem('workingHours') || "09:00 - 17:00";
+        if(editFeeInput) editFeeInput.value = localStorage.getItem('fee') || "1000";
         scheduleEditForm.style.display = 'block';
     });
 }
@@ -136,19 +140,22 @@ if (saveScheduleBtn) {
     saveScheduleBtn.addEventListener('click', async () => {
         const availability = editAvailabilityInput.value;
         const workingHours = editHoursInput.value;
+        const fee = editFeeInput ? editFeeInput.value : "1000";
 
         try {
             const resp = await fetch(`${API_BASE_URL}/doctor/${currentDoctorId}/availability`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ availability: availability, working_hours: workingHours })
+                body: JSON.stringify({ availability: availability, working_hours: workingHours, fee: fee })
             });
 
             if (resp.ok) {
                 localStorage.setItem('availability', availability);
                 localStorage.setItem('workingHours', workingHours);
+                localStorage.setItem('fee', fee);
                 displayAvailability.innerText = availability;
                 displayHours.innerText = workingHours;
+                if(displayFee) displayFee.innerText = fee;
                 scheduleEditForm.style.display = 'none';
             } else {
                 alert('Failed to update schedule');
@@ -172,6 +179,7 @@ function showDashboard() {
     // Update schedule display
     displayAvailability.innerText = localStorage.getItem('availability') || "Mon-Fri";
     displayHours.innerText = localStorage.getItem('workingHours') || "09:00 - 17:00";
+    if(displayFee) displayFee.innerText = localStorage.getItem('fee') || "1000";
 
     fetchDoctorAppointments();
 }

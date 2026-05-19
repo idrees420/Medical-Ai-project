@@ -21,6 +21,16 @@ from langchain_core.messages import HumanMessage, AIMessage
 
 app = FastAPI()
 
+@app.exception_handler(Exception)
+async def debug_exception_handler(request, exc):
+    import traceback
+    print(f"ERROR: {exc}")
+    traceback.print_exc()
+    return JSONResponse(
+        status_code=500,
+        content={"detail": "Internal Server Error", "msg": str(exc)}
+    )
+
 # Password hashing
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
@@ -248,6 +258,7 @@ class DoctorSignupRequest(BaseModel):
     password: str
     availability: str = "Mon-Fri"
     working_hours: str = "09:00 - 17:00"
+    fee: str = "1000"
 
 @app.post("/doctor/signup")
 def doctor_signup(request: DoctorSignupRequest, db: Session = Depends(get_db)):
@@ -263,7 +274,8 @@ def doctor_signup(request: DoctorSignupRequest, db: Session = Depends(get_db)):
         specialization=request.specialization,
         password_hash=hashed_pw,
         availability=request.availability,
-        working_hours=request.working_hours
+        working_hours=request.working_hours,
+        fee=request.fee
     )
     db.add(new_doctor)
     db.commit()
@@ -280,12 +292,14 @@ def doctor_login(request: DoctorLoginRequest, db: Session = Depends(get_db)):
         "full_name": doctor.full_name, 
         "specialization": doctor.specialization,
         "availability": doctor.availability,
-        "working_hours": doctor.working_hours
+        "working_hours": doctor.working_hours,
+        "fee": doctor.fee
     }
 
 class UpdateAvailabilityRequest(BaseModel):
     availability: str
     working_hours: str
+    fee: str
 
 @app.put("/doctor/{doctor_id}/availability")
 def update_availability(doctor_id: int, request: UpdateAvailabilityRequest, db: Session = Depends(get_db)):
@@ -295,8 +309,9 @@ def update_availability(doctor_id: int, request: UpdateAvailabilityRequest, db: 
     
     doctor.availability = request.availability
     doctor.working_hours = request.working_hours
+    doctor.fee = request.fee
     db.commit()
-    return {"message": "Availability updated"}
+    return {"message": "Availability and fee updated"}
 
 @app.get("/doctor/appointments/{doctor_id}")
 def get_doctor_appointments(doctor_id: int, db: Session = Depends(get_db)):

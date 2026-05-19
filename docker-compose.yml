@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  # 1. The Database Service
+  db:
+    image: postgres:15
+    container_name: fyp-db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: IDpl34$$ # Keep your same password
+      POSTGRES_DB: fyp_db
+    ports:
+      - "5432:5432" # Still accessible from outside
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  # 2. The Backend Service
+  backend:
+    build:
+      context: ./backend # Look in the root folder
+      dockerfile: Dockerfile # Path to your Dockerfile
+    container_name: fyp-backend
+    restart: always
+    ports:
+      - "8001:8001"
+    environment:
+      - DATABASE_URL=postgresql://postgres:IDpl34$$@db:5432/fyp_db
+      - MISTRAL_API_KEY=X82QzcHRNCvHTP4rV2HXQ0IwF1xZvwsF
+    depends_on:
+      - db # Only start backend after db is ready
+
+  # 3. The Frontend Service
+  frontend:
+    build:
+      context: ./Frontend # Path to your Frontend folder
+      dockerfile: Dockerfile
+    container_name: fyp-frontend
+    restart: always
+    ports:
+      - "5500:80" # We map Port 80 inside to 5500 outside
+    depends_on:
+      - backend # Only start frontend after backend is ready
+
+volumes:
+  postgres_data:
+    # This saves your data even if containers are deleted
+
+

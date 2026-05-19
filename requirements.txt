@@ -1,11 +1,5 @@
 fastapi
 uvicorn
-torch
-transformers
-huggingface_hub
-tokenizers
-numpy
-pandas
 sqlalchemy
 python-dotenv
 langchain

@@ -149,7 +149,7 @@ info_agent = create_react_agent(
 Flow:
 1. If the user mentions a disease but hasn't explicitly agreed to see a specific specialist, figure out the required specialty and ASK the user: "Do you want to book an appointment with a [Specialty] doctor?" Do NOT use the find_doctor tool yet.
 2. If the user explicitly asks to see doctors of a specific specialty, or says "yes" after you suggest a specialty, use the 'find_doctor' tool to search for doctors.
-3. When you find doctors, list their names, IDs, and their availability (days and hours). Then ask: "Would you like to book an appointment with any of these doctors? Let me know which one and your preferred date and time."
+3. When you find doctors, list their names, IDs, availability (days and hours), and their consultation fee (Rs.). Then ask: "Would you like to book an appointment with any of these doctors? Let me know which one and your preferred date and time."
 """
 )
 # 3. Booking Agent

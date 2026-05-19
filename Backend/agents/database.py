@@ -23,7 +23,8 @@ def search_doctors(specialty: str) -> List[Dict]:
                 "id": d.id,
                 "name": f"Dr. {d.full_name}",
                 "specialty": d.specialization,
-                "availability": f"{d.availability} ({d.working_hours})"
+                "availability": f"{d.availability} ({d.working_hours})",
+                "fee": getattr(d, 'fee', '1000')
             })
         return results
     finally:
@@ -44,7 +45,8 @@ def get_doctor_by_name(name: str) -> Optional[Dict]:
                 "id": d.id,
                 "name": f"Dr. {d.full_name}",
                 "specialty": d.specialization,
-                "availability": "Mon-Fri"
+                "availability": f"{d.availability} ({d.working_hours})",
+                "fee": getattr(d, 'fee', '1000')
             }
         return None
     finally:
