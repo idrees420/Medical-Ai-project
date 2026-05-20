@@ -137,7 +137,7 @@ predictBtn.addEventListener('click', async () => {
 
         const data = await response.json();
         currentDiagnosis = data.result || "Unknown condition";
-        diseaseText.textContent = currentDiagnosis;
+        diseaseText.innerHTML = marked.parse(currentDiagnosis);
 
         resultBox.classList.remove('hidden');
         appointmentWrapper.classList.remove('hidden');
@@ -161,7 +161,6 @@ bookAppointmentBtn.addEventListener('click', () => {
     if (currentDiagnosis && chatHistory.length === 0) {
         const introMsg = `I was just diagnosed with ${currentDiagnosis}. I'd like to book an appointment with a specialist.`;
         chatWindow.appendChild(createMessageElement(introMsg, true));
-        chatHistory.push(`User: ${introMsg}`);
         sendMessage(introMsg);
     }
 
@@ -178,9 +177,11 @@ function createMessageElement(content, isUser = false) {
     const wrapper = document.createElement('div');
     wrapper.className = `message ${isUser ? 'user-message' : 'ai-message'} fade-in`;
 
+    const formattedContent = isUser ? content : marked.parse(content);
+
     wrapper.innerHTML = `
         <div class="avatar">${isUser ? 'U' : 'AI'}</div>
-        <div class="bubble">${content}</div>
+        <div class="bubble">${formattedContent}</div>
     `;
     return wrapper;
 }
